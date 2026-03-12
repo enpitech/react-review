@@ -9,7 +9,7 @@ allowed-tools: Bash(gh *), Bash(git *), Bash(grep *), Bash(find *), Read, Grep, 
 
 Review scope: **PR diff + directly affected files only.**
 
-Follow the review criteria defined in `.claude/rules/pr-review-criteria.md`.
+Follow the review criteria defined in `rules/pr-review-criteria.md`.
 
 ## Step 1 — Detect project context
 

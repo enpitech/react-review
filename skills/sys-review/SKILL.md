@@ -1,5 +1,5 @@
 ---
-name: system-review
+name: sys-review
 description: Run a full-codebase 7-pass React/Next.js audit with system-level checks. Use when auditing an entire project, checking for architectural issues, or performing a comprehensive code quality review.
 disable-model-invocation: true
 allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Read, Grep, Glob, Write
@@ -9,7 +9,7 @@ allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Read, Grep, Glob, Write
 
 Review scope: **Entire codebase.** Local-only — not available in CI.
 
-Follow the review criteria defined in `.claude/rules/pr-review-criteria.md`.
+Follow the review criteria defined in `rules/pr-review-criteria.md`.
 
 ## Step 1 — Detect project context
 

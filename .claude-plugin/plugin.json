@@ -1,0 +1,10 @@
+{
+  "name": "enpitech",
+  "description": "7-pass React/Next.js code review system — catches real bugs, security issues, and architecture problems at 8/10+ confidence. Includes PR-scoped diff review and full codebase audit skills.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Enpitech"
+  },
+  "repository": "https://github.com/enpitech/react-review",
+  "license": "MIT"
+}

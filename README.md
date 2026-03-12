@@ -1,6 +1,6 @@
 # React Review
 
-7-pass React/Next.js code review system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — CI + local [skills](https://code.claude.com/docs/en/skills).
+7-pass React/Next.js code review [plugin](https://code.claude.com/docs/en/plugins) for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — CI + local [skills](https://code.claude.com/docs/en/skills).
 
 ## What It Does
 
@@ -25,9 +25,9 @@ Automatically adjusts based on your `package.json`:
 - **Next.js** detected → enables SSR/RSC rules (Server Action auth, serialization, Suspense)
 - **Design system** detected (`@radix-ui`, `shadcn`) → flags excessive inline styling
 
-## Two Modes
+## Two Skills
 
-### Mode 1: PR Review (CI + Local)
+### `/enpitech:pr-review` — PR Review (CI + Local)
 
 Scoped to the PR diff + directly affected files. Fast and focused.
 
@@ -38,17 +38,17 @@ Posts inline comments directly on the changed lines.
 **Local — via Claude Code CLI:**
 
 ```
-/pr-review
+/enpitech:pr-review
 ```
 
 Outputs findings to `pr-review-findings.md` and offers to apply fixes.
 
-### Mode 2: System Review (Local Only)
+### `/enpitech:sys-review` — System Review (Local Only)
 
 Full codebase audit. Runs all 7 passes across every source file, plus system-level checks:
 
 ```
-/system-review
+/enpitech:sys-review
 ```
 
 Catches things a PR review never could:
@@ -61,24 +61,51 @@ Outputs organized report to `system-review-findings.md`.
 
 ## Installation
 
-### Option A: Copy files into your project
+### Option A: Install as a plugin
+
+**From a marketplace** (if your team has a [plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) that includes this plugin):
+
+```
+/plugins install enpitech
+```
+
+**From a local directory:**
+
+```bash
+git clone https://github.com/enpitech/react-review.git
+claude --plugin-dir ./react-review
+```
+
+Or add it permanently to your project's `.claude/plugins.json`.
+
+Skills become `/enpitech:pr-review` and `/enpitech:sys-review`.
+
+> **Note:** Plugins don't install workflow files. Copy the CI workflow manually:
+> ```bash
+> cp -r react-review/.github your-project/
+> ```
+
+### Option B: Copy files into your project
 
 ```bash
 # Clone this repo
 git clone https://github.com/enpitech/react-review.git
 
 # Copy into your project
-cp -r react-review/.claude your-project/
+cp -r react-review/rules your-project/.claude/rules
+cp -r react-review/skills your-project/.claude/skills
 cp -r react-review/.github your-project/
 ```
 
-### Option B: Cherry-pick what you need
+Skills become `/pr-review` and `/sys-review` (no namespace prefix).
+
+### Cherry-pick what you need
 
 | File | Purpose | Required? |
 |------|---------|-----------|
-| `.claude/rules/pr-review-criteria.md` | Shared 7-pass review criteria | Yes |
-| `.claude/skills/pr-review/SKILL.md` | Local `/pr-review` skill | For local use |
-| `.claude/skills/system-review/SKILL.md` | Local `/system-review` skill | For local use |
+| `rules/pr-review-criteria.md` | Shared 7-pass review criteria | Yes |
+| `skills/pr-review/SKILL.md` | `/enpitech:pr-review` skill (or `/pr-review` standalone) | For local use |
+| `skills/sys-review/SKILL.md` | `/enpitech:sys-review` skill (or `/sys-review` standalone) | For local use |
 | `.github/workflows/claude-code-review.yml` | CI workflow | For GitHub Actions |
 
 ## CI Setup
@@ -113,7 +140,7 @@ on:
 
 ## Customization
 
-Edit `.claude/rules/pr-review-criteria.md` to:
+Edit `rules/pr-review-criteria.md` to:
 - Add/remove review passes
 - Adjust confidence threshold (default: 8/10)
 - Change severity levels
@@ -121,17 +148,6 @@ Edit `.claude/rules/pr-review-criteria.md` to:
 - Modify context-aware detection rules
 
 Both skills and the CI workflow reference this single file — one source of truth.
-
-## Skills vs Commands
-
-This repo uses the [skills format](https://code.claude.com/docs/en/skills) (`.claude/skills/<name>/SKILL.md`) — the recommended approach that supersedes `.claude/commands/`. Skills add:
-
-- **YAML frontmatter** for `allowed-tools`, `disable-model-invocation`, `description`, etc.
-- **Auto-invocation** — Claude can trigger skills automatically based on description match
-- **Supporting files** — templates, scripts, and examples in the skill directory
-- **Subagent execution** via `context: fork`
-
-Existing `.claude/commands/` files still work but won't get these features.
 
 ## License
 

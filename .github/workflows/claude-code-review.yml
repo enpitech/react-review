@@ -51,7 +51,7 @@ jobs:
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.issue.number }}
 
-            Follow the review criteria defined in `.claude/rules/pr-review-criteria.md`.
+            Follow the review criteria defined in `rules/pr-review-criteria.md`.
             The PR branch is already checked out in the current working directory.
 
             ## Steps
