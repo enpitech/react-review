@@ -17,17 +17,17 @@ Two scope prefixes, applied uniformly across all languages:
 
 | Skill | Scope | What it does | CI Trigger |
 |-------|-------|--------------|------------|
+| `cr-general` | Diff | 5-pass language-agnostic review | `/cr-general` |
+| `cra-general` | Full | General audit + system checks + dep audit | Local only |
+| `cr-fullstack` | Diff | Auto-detect stack + cross-layer checks | `/cr-fullstack` |
+| `cra-fullstack` | Full | Full audit per layer + cross-layer + dep audit | Local only |
 | `cr-react` | Diff | 7-pass React/Next.js review | `/cr-react` or `/claude-review` |
 | `cra-react` | Full | React audit + system checks + dep audit | Local only |
 | `cr-node` | Diff | 7-pass Node.js review | `/cr-node` |
 | `cra-node` | Full | Node.js audit + system checks + dep audit | Local only |
 | `cr-python` | Diff | 7-pass Python review | `/cr-python` |
 | `cra-python` | Full | Python audit + system checks + dep audit | Local only |
-| `cr-general` | Diff | 5-pass language-agnostic review | `/cr-general` |
-| `cra-general` | Full | General audit + system checks + dep audit | Local only |
 | `cr-deps` | Deps | 6-pass dependency health audit | `/cr-deps` |
-| `cr-fullstack` | Diff | Auto-detect stack + cross-layer checks | `/cr-fullstack` |
-| `cra-fullstack` | Full | Full audit per layer + cross-layer + dep audit | Local only |
 
 All skills report only **CRITICAL** (will break in prod) and **WARNING** (likely bug/security risk) at **8/10+ confidence**. No noise.
 
