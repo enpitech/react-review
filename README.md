@@ -262,12 +262,12 @@ Skills become `/cr-react`, `/cra-react`, `/cr-node`, etc. (no namespace prefix).
 
 | Trigger | Review Type |
 |---------|-------------|
+| `/cr-general` | Language-agnostic code review |
+| `/cr-fullstack` | Fullstack auto-detect + cross-layer |
 | `/cr-react` | React/Next.js code review |
 | `/cr-node` | Node.js code review |
 | `/cr-python` | Python code review |
-| `/cr-general` | Language-agnostic code review |
 | `/cr-deps` | Dependency health audit |
-| `/cr-fullstack` | Fullstack auto-detect + cross-layer |
 | `/claude-review` | React review (backward compatible) |
 
 > **Note:** `cra-*` skills (full audits) are local-only and not triggered in CI.
