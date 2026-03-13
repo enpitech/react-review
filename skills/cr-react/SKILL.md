@@ -2,7 +2,6 @@
 name: cr-react
 description: Run a 7-pass React/Next.js code review scoped to the current PR diff. Use when reviewing pull requests, checking code before merge, or when the user asks for a React code review.
 disable-model-invocation: true
-allowed-tools: Bash(gh *), Bash(git *), Bash(grep *), Bash(find *), Read, Grep, Glob, Write
 ---
 
 # CR-React — Diff-Scoped React Review

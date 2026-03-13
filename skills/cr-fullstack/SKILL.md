@@ -2,7 +2,6 @@
 name: cr-fullstack
 description: Run a cross-layer code review on a fullstack PR diff, auto-detecting languages and applying the appropriate criteria for each layer. Supports any combination of React, Node.js, Python, and other languages.
 disable-model-invocation: true
-allowed-tools: Bash(gh *), Bash(git *), Bash(grep *), Bash(find *), Bash(cat *), Read, Grep, Glob, Write
 ---
 
 # CR-Fullstack — Diff-Scoped Fullstack Review (Auto-Detect)

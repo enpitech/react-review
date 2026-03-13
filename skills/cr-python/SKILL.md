@@ -2,7 +2,6 @@
 name: cr-python
 description: Run a 7-pass Python code review scoped to the current PR diff. Use when reviewing pull requests for Python/Django/Flask/FastAPI projects, checking code before merge, or when the user asks for a Python code review.
 disable-model-invocation: true
-allowed-tools: Bash(gh *), Bash(git *), Bash(grep *), Bash(find *), Read, Grep, Glob, Write
 ---
 
 # CR-Python — Diff-Scoped Python Review

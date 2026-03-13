@@ -2,7 +2,6 @@
 name: cra-react
 description: Run a full-codebase 7-pass React/Next.js audit with system-level checks and dependency audit. Use when auditing an entire project, checking for architectural issues, or performing a comprehensive code quality review.
 disable-model-invocation: true
-allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Bash(npm *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Bash(yarn *), Bash(pnpm *), Read, Grep, Glob, Write
 ---
 
 # CRA-React — Full Codebase React Audit

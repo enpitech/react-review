@@ -2,7 +2,6 @@
 name: cra-fullstack
 description: Run a full-codebase cross-layer audit, auto-detecting languages and applying the appropriate criteria for each layer, plus system-level checks and dependency audit. Supports any combination of React, Node.js, Python, and other languages.
 disable-model-invocation: true
-allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Bash(npm *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Bash(yarn *), Bash(pnpm *), Bash(cat *), Read, Grep, Glob, Write
 ---
 
 # CRA-Fullstack — Full Codebase Fullstack Audit (Auto-Detect)

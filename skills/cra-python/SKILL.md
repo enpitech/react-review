@@ -2,7 +2,6 @@
 name: cra-python
 description: Run a full-codebase 7-pass Python audit with system-level checks and dependency audit. Use when auditing an entire Python project or performing a comprehensive code quality review.
 disable-model-invocation: true
-allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Read, Grep, Glob, Write
 ---
 
 # CRA-Python — Full Codebase Python Audit

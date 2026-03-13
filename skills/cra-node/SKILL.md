@@ -2,7 +2,6 @@
 name: cra-node
 description: Run a full-codebase 7-pass Node.js audit with system-level checks and dependency audit. Use when auditing an entire Node.js project or performing a comprehensive backend code quality review.
 disable-model-invocation: true
-allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Bash(npm *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Bash(yarn *), Bash(pnpm *), Read, Grep, Glob, Write
 ---
 
 # CRA-Node — Full Codebase Node.js Audit

@@ -2,7 +2,6 @@
 name: cra-general
 description: Run a full-codebase 5-pass language-agnostic audit with system-level checks and dependency audit. Use when auditing an entire project in any language that doesn't have a dedicated skill (Vue.js, Go, Rust, Ruby, PHP, Java, etc.).
 disable-model-invocation: true
-allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Bash(npm *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Bash(yarn *), Bash(pnpm *), Bash(cat *), Read, Grep, Glob, Write
 ---
 
 # CRA-General — Full Codebase General Audit

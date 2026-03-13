@@ -2,7 +2,6 @@
 name: cr-general
 description: Run a 5-pass language-agnostic code review scoped to the current PR diff. Use when reviewing pull requests for any language or framework that doesn't have a dedicated skill (Vue.js, Go, Rust, Ruby, PHP, Java, etc.).
 disable-model-invocation: true
-allowed-tools: Bash(gh *), Bash(git *), Bash(grep *), Bash(find *), Bash(cat *), Read, Grep, Glob, Write
 ---
 
 # CR-General — Diff-Scoped General Code Review

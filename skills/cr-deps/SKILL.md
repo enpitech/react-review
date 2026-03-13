@@ -2,7 +2,6 @@
 name: cr-deps
 description: Run a dependency health audit checking for vulnerabilities, outdated packages, deprecations, license issues, and unused dependencies. Use when auditing project dependencies or checking supply chain security.
 disable-model-invocation: true
-allowed-tools: Bash(npm *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Bash(find *), Bash(grep *), Bash(yarn *), Bash(pnpm *), Bash(cat *), Read, Grep, Glob, Write
 ---
 
 # CR-Deps — Dependency Health Audit
