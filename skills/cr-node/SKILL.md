@@ -1,22 +1,27 @@
 ---
-name: pr-review
-description: Run a 7-pass React/Next.js code review scoped to the current PR diff. Use when reviewing pull requests, checking code before merge, or when the user asks for a code review.
+name: cr-node
+description: Run a 7-pass Node.js code review scoped to the current PR diff. Use when reviewing pull requests for Node.js/Express/Fastify backends, checking code before merge, or when the user asks for a Node.js code review.
 disable-model-invocation: true
 allowed-tools: Bash(gh *), Bash(git *), Bash(grep *), Bash(find *), Read, Grep, Glob, Write
 ---
 
-# PR Review — Diff-Scoped React Review
+# CR-Node — Diff-Scoped Node.js Review
 
 Review scope: **PR diff + directly affected files only.**
 
-Follow the review criteria defined in `rules/pr-review-criteria.md`.
+Follow the review criteria defined in `rules/node.md`.
 
 ## Step 1 — Detect project context
 
 Read `package.json` and check for:
-- `next` dependency → enable SSR/RSC rules (Pass 2 Server Actions, Pass 5 Suspense/serialization)
-- `babel-plugin-react-compiler` or `react-compiler` → skip unnecessary memoization findings
-- `@radix-ui`, `shadcn`, or similar → flag excessive inline styling more aggressively
+- `express` dependency → enable Express-specific middleware checks
+- `fastify` → enable Fastify plugin checks
+- `koa` → enable Koa middleware checks
+- `typescript` or `tsconfig.json` → skip checks covered by TS compiler
+- `prisma`, `@prisma/client` → enable Prisma-specific query checks
+- `sequelize` → enable Sequelize raw query checks
+- `typeorm` → enable TypeORM query builder checks
+- `mongoose` → enable Mongoose-specific checks
 
 ## Step 2 — Get PR context
 
@@ -27,7 +32,7 @@ Run these commands sequentially (no nested substitution):
 
 ## Step 3 — Expand affected scope
 
-For each changed file, identify direct consumers (files that import from it) to catch breakage from interface changes. Only expand one level deep — do not crawl the entire dependency graph.
+For each changed file, identify direct consumers (files that import/require from it) to catch breakage from interface changes. Only expand one level deep — do not crawl the entire dependency graph.
 
 ## Step 4 — Run review passes
 
@@ -35,7 +40,7 @@ Apply all 7 review passes and filtering rules from the criteria file against the
 
 ## Step 5 — Output findings
 
-Write all findings to a temporary file `pr-review-findings.md` in the project root with this format per issue:
+Write all findings to a temporary file `cr-node-findings.md` in the project root with this format per issue:
 
 ```
 ### [SEVERITY] Pass N — file:line

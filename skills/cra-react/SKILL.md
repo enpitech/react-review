@@ -1,15 +1,16 @@
 ---
-name: sys-review
-description: Run a full-codebase 7-pass React/Next.js audit with system-level checks. Use when auditing an entire project, checking for architectural issues, or performing a comprehensive code quality review.
+name: cra-react
+description: Run a full-codebase 7-pass React/Next.js audit with system-level checks and dependency audit. Use when auditing an entire project, checking for architectural issues, or performing a comprehensive code quality review.
 disable-model-invocation: true
-allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Read, Grep, Glob, Write
+allowed-tools: Bash(find *), Bash(grep *), Bash(git *), Bash(npm *), Bash(pip *), Bash(pip-audit *), Bash(pip list *), Bash(yarn *), Bash(pnpm *), Read, Grep, Glob, Write
 ---
 
-# System Review — Full Codebase React Audit
+# CRA-React — Full Codebase React Audit
 
 Review scope: **Entire codebase.** Local-only — not available in CI.
 
-Follow the review criteria defined in `rules/pr-review-criteria.md`.
+Follow the review criteria defined in `rules/react.md`.
+Also apply the dependency audit criteria from `rules/deps.md` (see Step 4).
 
 ## Step 1 — Detect project context
 
@@ -42,7 +43,7 @@ Additionally, since full codebase is visible, check for these **system-level iss
 
 ## Step 4 — Output findings
 
-Write all findings to `system-review-findings.md` in the project root, organized by pass:
+Write all findings to `cra-react-findings.md` in the project root, organized by pass:
 
 ```
 # System Review Findings
@@ -91,6 +92,11 @@ Each finding should follow this format:
 ```
 
 Show the user the contents of the findings file.
+
+## Step 4 — Run dependency audit
+
+Apply all 6 passes from `rules/deps.md` against the project's dependency manifests and lockfiles.
+Append findings to the report under a "## Dependency Audit" section.
 
 ## Step 5 — Offer to fix
 
