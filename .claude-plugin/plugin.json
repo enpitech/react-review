@@ -1,10 +1,10 @@
 {
   "name": "enpitech",
-  "description": "7-pass React/Next.js code review system — catches real bugs, security issues, and architecture problems at 8/10+ confidence. Includes PR-scoped diff review and full codebase audit skills.",
-  "version": "1.0.0",
+  "description": "Multi-language code review and developer tools for Claude Code — supports React, Node.js, Python, any language, dependency auditing, and fullstack cross-layer reviews.",
+  "version": "2.0.0",
   "author": {
     "name": "Enpitech"
   },
-  "repository": "https://github.com/enpitech/react-review",
+  "repository": "https://github.com/enpitech/ai-tools",
   "license": "MIT"
 }

@@ -1,44 +1,155 @@
-# Code Review
+<div align="center">
 
-Multi-language code review [plugin](https://code.claude.com/docs/en/plugins) for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — CI + local [skills](https://code.claude.com/docs/en/skills).
+<!-- Replace with your actual logo: add .github/assets/logo.png to the repo -->
+<img src=".github/assets/banner.png" alt="Enpitech" width="" />
 
-Supports **React/Next.js**, **Node.js**, **Python**, **any language** (general), **dependency auditing**, and **fullstack** cross-layer reviews with auto-detection.
+<br />
+<br />
 
-## Architecture
+# AI Tools
+
+**We've distilled 10+ years of frontend and fullstack engineering into a structured AI toolkit —<br />a skills repository purpose-built for AI agents and LLMs.**
+
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-7C3AED)](https://code.claude.com/docs/en/plugins)
+[![GitHub Actions](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF)](https://github.com/enpitech/ai-tools/actions)
+
+[Plugin Description](#plugin-description) · [Use Cases](#example-use-cases) · [Skills](#available-skills) · [Installation](#installation) · [CI Setup](#ci-setup)
+
+</div>
+
+<br />
+
+> **Built by [Enpitech](https://enpitech.com)** | a multi-pass code review system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that catches real bugs, security vulnerabilities, and architecture issues before they reach production. Works in CI and locally. Supports React, Node.js, Python, and any language.
+
+<br />
+
+## Plugin Description
+
+Each skill runs a **deterministic sequence of focused review passes** — bugs first, then security, then architecture, and so on — ensuring nothing gets missed. This isn't a generic "review my code" prompt. It's a structured system.
+
+<table>
+<tr>
+<td width="50%">
+
+### 🔬 Multi-pass structure
+5–7 sequential passes with distinct focus areas per review. Not a single open-ended scan.
+
+### 🎯 High-confidence only
+Reports only **CRITICAL** and **WARNING** at 8/10+ confidence. No noise, no style nits.
+
+### 🔄 Two scopes
+`cr-*` reviews PR diffs (CI + local).<br />`cra-*` audits the full codebase (local, includes deps).
+
+</td>
+<td width="50%">
+
+### 🧠 Auto-detection
+Fullstack and general skills detect your language and framework automatically.
+
+### ⚡ CI-ready
+Ships with a GitHub Actions workflow. Comment `/cr-react` on a PR → inline review comments.
+
+### 🛠 Customizable
+All review criteria live in plain markdown files. Add passes, change thresholds, adapt to your stack.
+
+</td>
+</tr>
+</table>
+
+<br />
+
+## Example Use Cases
+
+<table>
+<tr>
+<td>
+
+#### 💬 PR review in CI
+A developer opens a PR with React changes. A teammate comments `/cr-react`. Claude runs 7 review passes on the diff and posts inline comments on bugs and security issues.
+
+</td>
+<td>
+
+#### 🔍 Pre-merge local check
+Before pushing a Node.js branch, run `/enpitech:cr-node` locally. Get a report covering bugs, security, async patterns, error handling, API design, performance, and code quality.
+
+</td>
+</tr>
+<tr>
+<td>
+
+#### 🏗 Full codebase audit
+A tech lead assesses a Python project before a refactor. `/enpitech:cra-python` scans every file + system-level checks (dead code, circular imports, config drift) + full dependency audit.
+
+</td>
+<td>
+
+#### 📦 Dependency health check
+Before a release, `/enpitech:cr-deps` checks for CVEs, outdated packages, deprecated deps, license issues, unused packages, and lockfile integrity.
+
+</td>
+</tr>
+<tr>
+<td>
+
+#### 🌐 Fullstack cross-layer review
+A PR touches React frontend and Express backend. `/enpitech:cr-fullstack` auto-detects the stack, applies the right passes per layer, and checks cross-layer issues like API mismatches and auth flow gaps.
+
+</td>
+<td>
+
+#### 🌍 Any language
+Go + Vue.js project? `/enpitech:cr-general` auto-detects the language and applies language-agnostic passes with framework-specific checks (Vue `v-html` XSS, Go unchecked errors, etc.).
+
+</td>
+</tr>
+</table>
+
+<br />
+
+---
+
+## Available Skills
 
 Two scope prefixes, applied uniformly across all languages:
 
 | Prefix | Scope | Where | Includes deps? |
-|--------|-------|-------|-----------------|
-| `cr-` | PR diff + affected files | CI + Local | No |
-| `cra-` | Full codebase audit | Local only | Yes |
+|--------|-------|-------|:---:|
+| `cr-` | PR diff + affected files | CI + Local | ✗ |
+| `cra-` | Full codebase audit | Local only | ✓ |
 
-## Skills Overview
+<br />
 
 | Skill | Scope | What it does | CI Trigger |
-|-------|-------|--------------|------------|
-| `cr-general` | Diff | 5-pass language-agnostic review | `/cr-general` |
-| `cra-general` | Full | General audit + system checks + dep audit | Local only |
-| `cr-fullstack` | Diff | Auto-detect stack + cross-layer checks | `/cr-fullstack` |
-| `cra-fullstack` | Full | Full audit per layer + cross-layer + dep audit | Local only |
-| `cr-react` | Diff | 7-pass React/Next.js review | `/cr-react` or `/claude-review` |
-| `cra-react` | Full | React audit + system checks + dep audit | Local only |
+|:------|:-----:|:-------------|:----------:|
+| `cr-react` | Diff | 7-pass React/Next.js review | `/cr-react` |
+| `cra-react` | Full | React audit + system checks + dep audit | — |
 | `cr-node` | Diff | 7-pass Node.js review | `/cr-node` |
-| `cra-node` | Full | Node.js audit + system checks + dep audit | Local only |
+| `cra-node` | Full | Node.js audit + system checks + dep audit | — |
 | `cr-python` | Diff | 7-pass Python review | `/cr-python` |
-| `cra-python` | Full | Python audit + system checks + dep audit | Local only |
+| `cra-python` | Full | Python audit + system checks + dep audit | — |
+| `cr-general` | Diff | 5-pass language-agnostic review | `/cr-general` |
+| `cra-general` | Full | General audit + system checks + dep audit | — |
 | `cr-deps` | Deps | 6-pass dependency health audit | `/cr-deps` |
+| `cr-fullstack` | Diff | Auto-detect stack + cross-layer checks | `/cr-fullstack` |
+| `cra-fullstack` | Full | Full audit per layer + cross-layer + dep audit | — |
 
-All skills report only **CRITICAL** (will break in prod) and **WARNING** (likely bug/security risk) at **8/10+ confidence**. No noise.
+> All skills report only **CRITICAL** and **WARNING** findings at **8/10+ confidence**.
+
+<br />
 
 ---
 
-## CR-React — React/Next.js
+## Detailed Review Passes
 
-7 sequential review passes:
+<details>
+<summary><strong>React/Next.js</strong> — 7 passes</summary>
+
+<br />
 
 | Pass | Focus | Examples |
-|------|-------|---------|
+|:-----|:------|:--------|
 | 1. BUGS | Logic errors | null access, race conditions, wrong conditionals |
 | 2. SECURITY | Vulnerabilities | XSS, exposed secrets, unauthenticated Server Actions |
 | 3. COMPONENT ARCHITECTURE | Structure | God components, prop drilling, cross-feature imports |
@@ -49,19 +160,20 @@ All skills report only **CRITICAL** (will break in prod) and **WARNING** (likely
 
 **Context-aware**: React Compiler, Next.js SSR/RSC, design systems (`@radix-ui`, `shadcn`).
 
-| Command | Scope |
-|---------|-------|
-| `/enpitech:cr-react` | PR diff review |
-| `/enpitech:cra-react` | Full codebase audit + system checks + dep audit |
+```
+/enpitech:cr-react          # PR diff review
+/enpitech:cra-react         # Full codebase audit + system checks + dep audit
+```
 
----
+</details>
 
-## CR-Node — Node.js
+<details>
+<summary><strong>Node.js</strong> — 7 passes (OWASP + eslint-plugin-security)</summary>
 
-7 sequential review passes based on **OWASP Node.js Security Cheat Sheet** and **eslint-plugin-security**:
+<br />
 
 | Pass | Focus | Examples |
-|------|-------|---------|
+|:-----|:------|:--------|
 | 1. BUGS | Logic errors | Unhandled promise rejections, race conditions, event loop blocking |
 | 2. SECURITY | Vulnerabilities | eval/exec injection, prototype pollution, ReDoS, SSRF, missing helmet/CSRF |
 | 3. ASYNC PATTERNS | Event loop | Blocking calls in async, missing Promise.all, stream backpressure |
@@ -72,19 +184,20 @@ All skills report only **CRITICAL** (will break in prod) and **WARNING** (likely
 
 **Context-aware**: Express, Fastify, Koa; TypeScript; Prisma, Sequelize, TypeORM, Mongoose.
 
-| Command | Scope |
-|---------|-------|
-| `/enpitech:cr-node` | PR diff review |
-| `/enpitech:cra-node` | Full codebase audit + system checks + dep audit |
+```
+/enpitech:cr-node            # PR diff review
+/enpitech:cra-node           # Full codebase audit + system checks + dep audit
+```
 
----
+</details>
 
-## CR-Python — Python
+<details>
+<summary><strong>Python</strong> — 7 passes (Bandit + Ruff + Pylint)</summary>
 
-7 sequential review passes based on **Bandit** (B1xx–B7xx), **Ruff/flake8-bandit**, and **Pylint**:
+<br />
 
 | Pass | Focus | Examples |
-|------|-------|---------|
+|:-----|:------|:--------|
 | 1. BUGS | Logic errors | Mutable default arguments, loop variable closures, unreachable code |
 | 2. SECURITY | Vulnerabilities | eval/exec, pickle, subprocess shell=True, SQL injection, unsafe YAML, XML attacks |
 | 3. TYPE SAFETY | Type correctness | Missing annotations, inconsistent returns, overly broad `Any` |
@@ -95,40 +208,44 @@ All skills report only **CRITICAL** (will break in prod) and **WARNING** (likely
 
 **Context-aware**: Django, Flask, FastAPI, SQLAlchemy, Pydantic, pytest, mypy/pyright.
 
-| Command | Scope |
-|---------|-------|
-| `/enpitech:cr-python` | PR diff review |
-| `/enpitech:cra-python` | Full codebase audit + system checks + dep audit |
+```
+/enpitech:cr-python          # PR diff review
+/enpitech:cra-python         # Full codebase audit + system checks + dep audit
+```
 
----
+</details>
 
-## CR-General — Any Language
+<details>
+<summary><strong>General — Any Language</strong> — 5 passes</summary>
 
-5 sequential **language-agnostic** review passes for platforms without a dedicated skill. Works with Vue.js, Angular, Svelte, Go, Rust, Ruby, PHP, Java, Kotlin, Swift, C#, and more.
+<br />
+
+Works with Vue.js, Angular, Svelte, Go, Rust, Ruby, PHP, Java, Kotlin, Swift, C#, and more.
 
 | Pass | Focus | Examples |
-|------|-------|---------|
+|:-----|:------|:--------|
 | 1. BUGS | Logic errors | Null access, resource leaks, concurrency issues, off-by-one |
 | 2. SECURITY | Vulnerabilities | Injection, hardcoded secrets, insecure crypto, SSRF, XSS, CSRF |
 | 3. ERROR HANDLING | Resilience | Silent failures, bare exception catching, missing cleanup |
 | 4. PERFORMANCE | Efficiency | Blocking I/O, N+1 queries, quadratic algorithms, memory issues |
 | 5. CODE QUALITY | Maintainability | Dead code, duplication, overly complex functions, deprecated APIs |
 
-**Auto-detects** language and framework from config files, then applies framework-specific checks (Vue.js `v-html` XSS, Go unchecked errors, Rails mass assignment, Laravel raw queries, Spring injection, etc.).
+**Auto-detects** language and framework, then applies framework-specific checks (Vue `v-html` XSS, Go unchecked errors, Rails mass assignment, Laravel raw queries, Spring injection, etc.).
 
-| Command | Scope |
-|---------|-------|
-| `/enpitech:cr-general` | PR diff review |
-| `/enpitech:cra-general` | Full codebase audit + system checks + dep audit |
+```
+/enpitech:cr-general         # PR diff review
+/enpitech:cra-general        # Full codebase audit + system checks + dep audit
+```
 
----
+</details>
 
-## CR-Deps — Dependency Audit
+<details>
+<summary><strong>Dependencies</strong> — 6 audit passes</summary>
 
-6 audit passes on dependency health. Use standalone — also included automatically in all `cra-*` audits.
+<br />
 
 | Pass | Focus | What It Checks |
-|------|-------|----------------|
+|:-----|:------|:---------------|
 | 1. VULNERABILITIES | Security | `npm audit` / `pip-audit` — CVEs by severity |
 | 2. OUTDATED | Freshness | Major version lag, security-related updates |
 | 3. DEPRECATIONS | Lifecycle | Deprecated packages, suggested replacements |
@@ -142,26 +259,29 @@ Auto-detects npm, yarn, pnpm, pip, poetry, uv, pipenv.
 /enpitech:cr-deps
 ```
 
-> **Note:** Dependency audit does not run in `cr-*` diff reviews. It runs standalone via `cr-deps`, or automatically as part of any `cra-*` full audit.
+> Runs standalone, or automatically as part of any `cra-*` full audit. Not included in `cr-*` diff reviews.
 
----
+</details>
 
-## CR-Fullstack — Cross-Layer Review (Auto-Detect)
+<details>
+<summary><strong>Fullstack — Cross-Layer</strong> (Auto-Detect)</summary>
 
-**Dynamically detects** which languages are in the project and applies the right criteria per layer. No hardcoded language combos.
+<br />
 
-**How detection works:**
-- React/Next.js detected → applies `rules/react.md`
-- Express/Fastify/Koa detected → applies `rules/node.md`
-- Django/Flask/FastAPI detected → applies `rules/python.md`
-- Vue, Angular, Svelte, Go, Rust, Ruby, PHP, Java, etc. → applies `rules/general.md`
-- Monorepo → reads each workspace's config to classify
+**Dynamically detects** which languages are in the project and applies the right criteria per layer:
 
-**Examples:**
-- React + Express project → React passes on frontend, Node passes on backend
-- Vue + Go project → General passes on both (auto-adapted to each)
-- React + FastAPI project → React passes on frontend, Python passes on backend
-- Angular + Spring Boot project → General passes on both
+| Detected | Criteria applied |
+|:---------|:-----------------|
+| React/Next.js | `rules/react.md` |
+| Express/Fastify/Koa | `rules/node.md` |
+| Django/Flask/FastAPI | `rules/python.md` |
+| Vue, Angular, Svelte, Go, Rust, Ruby, PHP, Java, etc. | `rules/general.md` |
+| Monorepo | Reads each workspace's config to classify |
+
+**Stack examples:**
+- React + Express → React passes on frontend, Node passes on backend
+- Vue + Go → General passes on both (auto-adapted)
+- React + FastAPI → React passes on frontend, Python passes on backend
 
 **Cross-layer checks** (always applied):
 1. API contract validation
@@ -172,18 +292,24 @@ Auto-detects npm, yarn, pnpm, pip, poetry, uv, pipenv.
 6. Data flow security
 7. API versioning & deprecation
 
-| Command | Scope |
-|---------|-------|
-| `/enpitech:cr-fullstack` | PR diff + cross-layer checks |
-| `/enpitech:cra-fullstack` | Full audit per layer + cross-layer + system checks + dep audit |
+```
+/enpitech:cr-fullstack       # PR diff + cross-layer checks
+/enpitech:cra-fullstack      # Full audit per layer + cross-layer + system checks + dep audit
+```
+
+</details>
+
+<br />
 
 ---
 
 ## Installation
 
-### Option A: Install as a plugin
+The skills and rules are structured markdown files. They work natively as a **Claude Code plugin**, but can also be used with **any AI coding assistant** that reads instructions from your repo — including VS Code with GitHub Copilot, Cursor, Windsurf, and others.
 
-**From a marketplace** (if your team has a [plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) that includes this plugin):
+### Option A: Claude Code Plugin
+
+**From a marketplace** search for "Enpitech" and install the "AI Tools" plugin. or in claude code, run:
 
 ```
 /plugins install enpitech
@@ -192,8 +318,8 @@ Auto-detects npm, yarn, pnpm, pip, poetry, uv, pipenv.
 **From a local directory:**
 
 ```bash
-git clone https://github.com/enpitech/react-review.git
-claude --plugin-dir ./react-review
+git clone https://github.com/enpitech/ai-tools.git
+claude --plugin-dir ./ai-tools
 ```
 
 Or add it permanently to your project's `.claude/plugins.json`.
@@ -202,29 +328,42 @@ Skills become `/enpitech:cr-react`, `/enpitech:cra-react`, `/enpitech:cr-node`, 
 
 > **Note:** Plugins don't install workflow files. Copy the CI workflow manually:
 > ```bash
-> cp -r react-review/.github your-project/
+> cp -r ai-tools/.github your-project/
 > ```
 
-### Option B: Copy files into your project
+### Option B: Copy into your project (works with any AI tool)
 
 ```bash
 # Clone this repo
-git clone https://github.com/enpitech/react-review.git
+git clone https://github.com/enpitech/ai-tools.git
 
 # Copy into your project
-cp -r react-review/rules your-project/.claude/rules
-cp -r react-review/skills your-project/.claude/skills
-cp -r react-review/.github your-project/
+cp -r ai-tools/rules your-project/rules
+cp -r ai-tools/skills your-project/skills
+cp -r ai-tools/.github your-project/        # CI workflow (optional)
 ```
 
-Skills become `/cr-react`, `/cra-react`, `/cr-node`, etc. (no namespace prefix).
+Once the files are in your repo, any AI coding assistant can use them:
 
-### Cherry-pick what you need
+| Tool | How it picks up the skills |
+|:-----|:---------------------------|
+| **Claude Code** | Reads `skills/` and `rules/` automatically. Invoke with `/cr-react`, `/cra-node`, etc. |
+| **GitHub Copilot (VS Code)** | Reference the rules files as context in chat, or add them to `.github/copilot-instructions.md` |
+| **Cursor** | Add rules files to `.cursor/rules/` or reference them in chat context |
+| **Windsurf** | Reference the criteria markdown files as project context |
+| **Other AI assistants** | Point the agent to the relevant `rules/*.md` file — they're self-contained review criteria |
+
+> The `rules/*.md` files are the core value — they contain all the review criteria and work with any LLM. The `skills/*/SKILL.md` files add Claude Code-specific automation (diff collection, file scanning, output formatting).
+
+<details>
+<summary><strong>Cherry-pick what you need</strong></summary>
+
+<br />
 
 **Rules** (review criteria — pick by language):
 
 | File | Purpose |
-|------|---------|
+|:-----|:--------|
 | `rules/react.md` | React/Next.js 7-pass review criteria |
 | `rules/node.md` | Node.js 7-pass review criteria |
 | `rules/python.md` | Python 7-pass review criteria |
@@ -235,7 +374,7 @@ Skills become `/cr-react`, `/cra-react`, `/cr-node`, etc. (no namespace prefix).
 **Skills** (pick by language + scope):
 
 | File | Skill |
-|------|-------|
+|:-----|:------|
 | `skills/cr-react/SKILL.md` | PR diff React review |
 | `skills/cra-react/SKILL.md` | Full codebase React audit |
 | `skills/cr-node/SKILL.md` | PR diff Node.js review |
@@ -248,11 +387,11 @@ Skills become `/cr-react`, `/cra-react`, `/cr-node`, etc. (no namespace prefix).
 | `skills/cr-fullstack/SKILL.md` | PR diff fullstack review |
 | `skills/cra-fullstack/SKILL.md` | Full codebase fullstack audit |
 
-**CI:**
+</details>
 
-| File | Purpose |
-|------|---------|
-| `.github/workflows/claude-code-review.yml` | CI workflow for all `cr-*` triggers |
+<br />
+
+---
 
 ## CI Setup
 
@@ -261,16 +400,16 @@ Skills become `/cr-react`, `/cra-react`, `/cr-node`, etc. (no namespace prefix).
 3. Comment one of these on any PR:
 
 | Trigger | Review Type |
-|---------|-------------|
-| `/cr-general` | Language-agnostic code review |
-| `/cr-fullstack` | Fullstack auto-detect + cross-layer |
+|:--------|:------------|
 | `/cr-react` | React/Next.js code review |
 | `/cr-node` | Node.js code review |
 | `/cr-python` | Python code review |
+| `/cr-general` | Language-agnostic code review |
 | `/cr-deps` | Dependency health audit |
+| `/cr-fullstack` | Fullstack auto-detect + cross-layer |
 | `/claude-review` | React review (backward compatible) |
 
-> **Note:** `cra-*` skills (full audits) are local-only and not triggered in CI.
+> `cra-*` skills (full audits) are local-only and not triggered in CI.
 
 The workflow:
 - Detects the trigger keyword and selects the appropriate review criteria
@@ -278,9 +417,12 @@ The workflow:
 - Posts an acknowledgment comment, then inline review comments
 - Claude cannot post arbitrary PR comments (hardened against prompt injection)
 
-### Optional: Auto-trigger on PR
+<details>
+<summary><strong>Optional: Auto-trigger on PR</strong></summary>
 
-Uncomment the `pull_request` trigger in the workflow to run automatically on every PR:
+<br />
+
+Uncomment the `pull_request` trigger in the workflow:
 
 ```yaml
 on:
@@ -289,6 +431,12 @@ on:
   issue_comment:
     types: [created]
 ```
+
+</details>
+
+<br />
+
+---
 
 ## Security
 
@@ -299,15 +447,10 @@ on:
 
 ## Customization
 
-Edit the criteria files in `rules/` to:
-- Add/remove review passes
-- Adjust confidence threshold (default: 8/10)
-- Change severity levels
-- Add framework-specific checks
-- Modify context-aware detection rules
+Edit the criteria files in `rules/` to add/remove review passes, adjust confidence thresholds, change severity levels, or add framework-specific checks.
 
 | File | Controls |
-|------|----------|
+|:-----|:---------|
 | `rules/react.md` | React/Next.js review rules |
 | `rules/node.md` | Node.js review rules |
 | `rules/python.md` | Python review rules |
@@ -317,9 +460,27 @@ Edit the criteria files in `rules/` to:
 
 All skills reference these files — single source of truth per concern.
 
-## License
+<br />
 
-MIT
+---
+
+<div align="center">
+
+**Built with ❤️ by [Enpitech](https://enpitech.com)**
+
+MIT License
+
+</div>
+
+## Contributors
+
+<a href="https://github.com/lirankor">
+  <img src="https://github.com/lirankor.png" width="60" height="60" style="border-radius:50%" alt="lirankor" />
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/nir2002">
+  <img src="https://github.com/nir2002.png" width="60" height="60" style="border-radius:50%" alt="nir2002" />
+</a>
 
 ## License
 
