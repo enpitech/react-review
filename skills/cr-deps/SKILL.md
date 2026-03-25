@@ -46,7 +46,7 @@ Apply passes 3–6 from the criteria file:
 
 ## Step 5 — Output findings
 
-Write all findings to `deps-audit-findings.md` in the project root:
+Collect all findings for `deps-audit-findings.md` in this format:
 
 ```
 # Dependency Audit Findings
@@ -89,11 +89,13 @@ Each finding should follow this format:
 **Fix:** exact command to resolve (e.g., `npm install package@fixed-version`)
 ```
 
-Show the user the contents of the findings file.
+Show the user the findings.
 
-## Step 6 — Offer to fix
+## Step 6 — Autofix
 
-Ask the user: "Would you like me to apply the safe fixes? (npm audit fix / pip install upgrades)"
+Follow the autofix workflow defined in `rules/autofix.md`.
 
-If yes, apply only non-breaking fixes first. For breaking changes (major version bumps), list them and ask for confirmation.
-- Run everything autonomously without asking to confirm each step (except the final fix offer).
+- **Local mode**: present the three options (create findings file as `deps-audit-findings.md`, fix step by step, fix all). For dependency fixes, apply only non-breaking fixes automatically; for breaking changes (major version bumps), list them and ask for confirmation.
+- **CI mode**: post findings as PR comments with `/fix` and `/fix-all` reply instructions
+
+- Run everything autonomously without asking to confirm each step (except the autofix choice in local mode).

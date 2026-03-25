@@ -14,31 +14,31 @@
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-7C3AED)](https://code.claude.com/docs/en/plugins)
 [![GitHub Actions](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF)](https://github.com/enpitech/ai-tools/actions)
 
-[Plugin Description](#plugin-description) · [Use Cases](#example-use-cases) · [Skills](#available-skills) · [Installation](#installation) · [CI Setup](#ci-setup)
+[What's Inside](#whats-inside) · [Code Review](#code-review) · [Implementation Skills](#implementation-skills) · [All Skills](#available-skills) · [Installation](#installation) · [CI Setup](#ci-setup)
 
 </div>
 
 <br />
 
-> **Built by [Enpitech](https://enpitech.com)** | a multi-pass code review system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that catches real bugs, security vulnerabilities, and architecture issues before they reach production. Works in CI and locally. Supports React, Node.js, Python, and any language.
+> **Built by [Enpitech](https://enpitech.com)** | a comprehensive AI engineering toolkit for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), VS Code Copilot, Cursor, and more. Multi-pass code review, Figma-to-code implementation, and growing. Works in CI and locally. Supports React, Node.js, Python, and any language.
 
 <br />
 
-## Plugin Description
+## What's Inside
 
-Each skill runs a **deterministic sequence of focused review passes** — bugs first, then security, then architecture, and so on — ensuring nothing gets missed. This isn't a generic "review my code" prompt. It's a structured system.
+This toolkit packages Enpitech's 10+ years of frontend and fullstack expertise into structured AI skills. Each skill gives your agent a **deterministic, repeatable process** — not a vague prompt, but a step-by-step system.
 
 <table>
 <tr>
 <td width="50%">
 
-### 🔬 Multi-pass structure
-5–7 sequential passes with distinct focus areas per review. Not a single open-ended scan.
+### 🔬 Code Review
+Multi-pass review system: 5–7 sequential passes per language. Bugs → Security → Architecture → Performance → Quality. CI-ready.
 
-### 🎯 High-confidence only
-Reports only **CRITICAL** and **WARNING** at 8/10+ confidence. No noise, no style nits.
+### 🎨 Figma → Code
+Pixel-perfect implementation from Figma designs via MCP. Auto breakpoints, design tokens, asset export, visual verification.
 
-### 🔄 Two scopes
+### 🔄 Two review scopes
 `cr-*` reviews PR diffs (CI + local).<br />`cra-*` audits the full codebase (local, includes deps).
 
 </td>
@@ -51,7 +51,7 @@ Fullstack and general skills detect your language and framework automatically.
 Ships with a GitHub Actions workflow. Comment `/cr-react` on a PR → inline review comments.
 
 ### 🛠 Customizable
-All review criteria live in plain markdown files. Add passes, change thresholds, adapt to your stack.
+All criteria live in plain markdown files. Add passes, change thresholds, adapt to your stack. More skills coming.
 
 </td>
 </tr>
@@ -85,8 +85,8 @@ A tech lead assesses a Python project before a refactor. `/enpitech:cra-python` 
 </td>
 <td>
 
-#### 📦 Dependency health check
-Before a release, `/enpitech:cr-deps` checks for CVEs, outdated packages, deprecated deps, license issues, unused packages, and lockfile integrity.
+#### 🎨 Figma to production code
+A designer hands off a Figma section. `/enpitech:figma-to-code` pulls the design via MCP, classifies nodes as assets or UI elements, uses your design tokens, and screenshots every breakpoint until it matches.
 
 </td>
 </tr>
@@ -99,8 +99,8 @@ A PR touches React frontend and Express backend. `/enpitech:cr-fullstack` auto-d
 </td>
 <td>
 
-#### 🌍 Any language
-Go + Vue.js project? `/enpitech:cr-general` auto-detects the language and applies language-agnostic passes with framework-specific checks (Vue `v-html` XSS, Go unchecked errors, etc.).
+#### 📦 Dependency health check
+Before a release, `/enpitech:cr-deps` checks for CVEs, outdated packages, deprecated deps, license issues, unused packages, and lockfile integrity.
 
 </td>
 </tr>
@@ -111,6 +111,8 @@ Go + Vue.js project? `/enpitech:cr-general` auto-detects the language and applie
 ---
 
 ## Available Skills
+
+### Code Review
 
 Two scope prefixes, applied uniformly across all languages:
 
@@ -135,7 +137,15 @@ Two scope prefixes, applied uniformly across all languages:
 | `cr-fullstack` | Diff | Auto-detect stack + cross-layer checks | `/cr-fullstack` |
 | `cra-fullstack` | Full | Full audit per layer + cross-layer + dep audit | — |
 
-> All skills report only **CRITICAL** and **WARNING** findings at **8/10+ confidence**.
+> All review skills report only **CRITICAL** and **WARNING** findings at **8/10+ confidence**.
+
+<br />
+
+### Implementation Skills
+
+| Skill | What it does | Requirements |
+|:------|:-------------|:-------------|
+| `figma-to-code` | Pixel-perfect Figma → responsive production code. Auto breakpoints, DS tokens, asset export, visual verification loop. | Figma MCP + Playwright MCP |
 
 <br />
 
@@ -299,6 +309,32 @@ Auto-detects npm, yarn, pnpm, pip, poetry, uv, pipenv.
 
 </details>
 
+<details>
+<summary><strong>Figma → Code</strong> — Implementation Skill</summary>
+
+<br />
+
+Converts Figma designs into pixel-perfect, responsive, production-ready code using MCP tools.
+
+| Step | What it does |
+|:-----|:-------------|
+| 1. Variables | Collects section name, Figma URL, node IDs, route, selector from user |
+| 2. Baselines | Pulls mobile/tablet/desktop images via Figma MCP |
+| 3. Token mapping | Auto-discovers breakpoints, maps design values to existing DS tokens |
+| 4. Asset classification | Classifies each node as ASSET (export as-is) or UI ELEMENT (build with code) |
+| 5. Scaffold | Generates responsive code using DS primitives and tokens |
+| 6. Visual verification | Screenshots via Playwright MCP, compares to Figma baseline, iterates |
+
+**Requires**: Figma MCP server + Playwright MCP server running.
+
+**Policies**: No invented content/styles. No new breakpoints. No custom sizes outside token scale. Assets used as-is (never recreated with CSS).
+
+```
+/enpitech:figma-to-code      # Interactive — asks for Figma URL and section details
+```
+
+</details>
+
 <br />
 
 ---
@@ -353,7 +389,7 @@ Once the files are in your repo, any AI coding assistant can use them:
 | **Windsurf** | Reference the criteria markdown files as project context |
 | **Other AI assistants** | Point the agent to the relevant `rules/*.md` file — they're self-contained review criteria |
 
-> The `rules/*.md` files are the core value — they contain all the review criteria and work with any LLM. The `skills/*/SKILL.md` files add Claude Code-specific automation (diff collection, file scanning, output formatting).
+> The `rules/*.md` files are the core value — they contain all the review criteria and work with any LLM. The `skills/*/SKILL.md` files add agent-specific automation (diff collection, file scanning, output formatting, MCP orchestration).
 
 <details>
 <summary><strong>Cherry-pick what you need</strong></summary>
@@ -386,6 +422,7 @@ Once the files are in your repo, any AI coding assistant can use them:
 | `skills/cr-deps/SKILL.md` | Dependency health audit |
 | `skills/cr-fullstack/SKILL.md` | PR diff fullstack review |
 | `skills/cra-fullstack/SKILL.md` | Full codebase fullstack audit |
+| `skills/figma-to-code/SKILL.md` | Figma → pixel-perfect production code |
 
 </details>
 
@@ -458,7 +495,9 @@ Edit the criteria files in `rules/` to add/remove review passes, adjust confiden
 | `rules/deps.md` | Dependency audit rules |
 | `rules/fullstack.md` | Cross-layer check rules |
 
-All skills reference these files — single source of truth per concern.
+All review skills reference these files — single source of truth per concern.
+
+Implementation skills like `figma-to-code` are self-contained in their `SKILL.md` — no separate rules file needed.
 
 <br />
 

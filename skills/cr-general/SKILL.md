@@ -36,7 +36,7 @@ Apply all 5 review passes and filtering rules from the criteria file against the
 
 ## Step 5 — Output findings
 
-Write all findings to a temporary file `cr-general-findings.md` in the project root with this format per issue:
+Collect all findings with this format per issue:
 
 ```
 ### [SEVERITY] Pass N — file:line
@@ -46,15 +46,16 @@ Write all findings to a temporary file `cr-general-findings.md` in the project r
 **Fix:** suggested code change
 ```
 
-If no issues found, write: "✅ No issues found — all 5 review passes came back clean."
+If no issues found: "✅ No issues found — all 5 review passes came back clean."
 
-Show the user the contents of the findings file.
+Show the user the findings.
 
-## Step 6 — Offer to fix
+## Step 6 — Autofix
 
-Ask the user: "Would you like me to apply the suggested fixes?"
+Follow the autofix workflow defined in `rules/autofix.md`.
 
-If yes, apply each fix one at a time, showing the change before moving to the next.
-Do NOT apply fixes without user confirmation.
+- **Local mode**: present the three options (create findings file as `cr-general-findings.md`, fix step by step, fix all)
+- **CI mode**: post findings as PR comments with `/fix` and `/fix-all` reply instructions
+
 - Do not flag issues that are clearly intentional based on git blame context.
-- Run everything autonomously without asking to confirm each step.
+- Run everything autonomously without asking to confirm each step (except the autofix choice in local mode).

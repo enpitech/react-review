@@ -73,7 +73,7 @@ Apply all 7 cross-layer checks from `rules/fullstack.md`:
 
 ## Step 5 — Output findings
 
-Write all findings to `cr-fullstack-findings.md` in the project root:
+Collect all findings for `cr-fullstack-findings.md` in this format:
 
 ```
 # Fullstack Review Findings
@@ -104,12 +104,14 @@ Shared files reviewed: [count]
 - Top 3 files needing attention: [list]
 ```
 
-Show the user the contents of the findings file.
+Show the user the findings.
 
-## Step 6 — Offer to fix
+## Step 6 — Autofix
 
-Ask the user: "Would you like me to apply fixes? I can do all CRITICAL first, then WARNING."
+Follow the autofix workflow defined in `rules/autofix.md`.
 
-If yes, apply CRITICAL fixes first (one at a time with user confirmation), then WARNING fixes.
+- **Local mode**: present the three options (create findings file as `cr-fullstack-findings.md`, fix step by step, fix all)
+- **CI mode**: post findings as PR comments with `/fix` and `/fix-all` reply instructions
+
 - Do not flag issues that are clearly intentional based on git blame context.
-- Run everything autonomously without asking to confirm each step (except the final fix offer).
+- Run everything autonomously without asking to confirm each step (except the autofix choice in local mode).

@@ -110,12 +110,13 @@ Shared files scanned: [count]
 - Top 5 files needing attention: [list]
 ```
 
-Show the user the contents of the findings file.
+Show the user the findings.
 
-## Step 7 — Offer to fix
+## Step 7 — Autofix
 
-Ask the user: "Would you like me to apply fixes? I can do all CRITICAL first, then WARNING."
+Follow the local mode autofix workflow defined in `rules/autofix.md`.
 
-If yes, apply CRITICAL fixes first (one at a time with user confirmation), then WARNING fixes.
+Present the three options (create findings file as `cra-fullstack-findings.md`, fix step by step, fix all).
+When fixing, apply CRITICAL fixes first, then WARNING.
 - Do not flag issues that are clearly intentional based on git blame context.
-- Run everything autonomously without asking to confirm each step (except the final fix offer).
+- Run everything autonomously without asking to confirm each step (except the autofix choice).
