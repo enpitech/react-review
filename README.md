@@ -1,7 +1,6 @@
 <div align="center">
 
 <!-- Replace with your actual logo: add .github/assets/logo.png to the repo -->
-<img src=".github/assets/banner.png" alt="Enpitech" width="" />
 
 <br />
 <br />
