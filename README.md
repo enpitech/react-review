@@ -20,7 +20,7 @@
 
 <br />
 
-> **Built by [Enpitech](https://enpitech.com)** | a comprehensive AI engineering toolkit for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), VS Code Copilot, Cursor, and more. Multi-pass code review, Figma-to-code implementation, and growing. Works in CI and locally. Supports React, Node.js, Python, and any language.
+> **Built by [Enpitech](https://enpitech.dev)** | a comprehensive AI engineering toolkit for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), VS Code Copilot, Cursor, and more. Multi-pass code review, Figma-to-code implementation, and growing. Works in CI and locally. Supports React, Node.js, Python, and any language.
 
 <br />
 
